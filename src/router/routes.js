@@ -21,33 +21,25 @@ const frameIn = [
         },
         component: _import('system/index')
       },
-      // 演示页面
+      // 拨款申请
       {
-        path: 'page1',
-        name: 'page1',
+        path: 'fundCommited',
+        name: 'fundCommited',
         meta: {
-          title: '页面 1',
+          title: '拨款申请',
           auth: true
         },
-        component: _import('demo/page1')
+        component: _import('fundCommited/fundCommitedList')
       },
+      // 拨款审批
       {
-        path: 'page2',
-        name: 'page2',
+        path: 'fundApprove',
+        name: 'fundApprove',
         meta: {
-          title: '页面 2',
+          title: '拨款审批',
           auth: true
         },
-        component: _import('demo/page2')
-      },
-      {
-        path: 'page3',
-        name: 'page3',
-        meta: {
-          title: '页面 3',
-          auth: true
-        },
-        component: _import('demo/page3')
+        component: _import('fundApprove/fundApproveList')
       },
       // 系统 前端日志
       {

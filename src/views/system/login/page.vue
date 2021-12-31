@@ -1,32 +1,43 @@
 <template>
-  <div class="page-login">
-    <div class="page-login--layer page-login--layer-area">
-      <ul class="circles">
-        <li v-for="n in 10" :key="n"></li>
-      </ul>
-    </div>
+<div class="page-login">
     <div
-      class="page-login--layer page-login--layer-time"
+      class="page-login--layer page-login--layer-time bg-image"
       flex="main:center cross:center">
-      {{time}}
+      <vue-particles
+        color="#fff"
+        :particleOpacity="0.7"
+        :particlesNumber="60"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#fff"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="2"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+        class="lizi"
+        style="width: 100%;height: 100%"
+      ></vue-particles>
+      <div class="system-title">拨款审核平台</div>
     </div>
     <div class="page-login--layer">
       <div
         class="page-login--content"
         flex="dir:top main:justify cross:stretch box:justify">
-        <div class="page-login--content-header">
-          <p class="page-login--content-header-motto">
-            时间是一切财富中最宝贵的财富
-          </p>
-        </div>
-        <div
-          class="page-login--content-main"
-          flex="dir:top main:center cross:center">
-          <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+        <div class="page-login--content-header"></div>
+        <div class="page-login--content-main" flex="dir:right cross:center">
           <!-- form -->
           <div class="page-login--form">
             <el-card shadow="never">
+              <!-- logo -->
+              <div flex="dir:left main:center cross:center">
+                <!-- <img class="page-login--logo" src="./image/login-icon.png"/> -->
+                <p class="login-title">登录</p>
+              </div>
               <el-form
                 ref="loginForm"
                 label-position="top"
@@ -49,18 +60,9 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="code">
-                  <el-input
-                    type="text"
-                    v-model="formLogin.code"
-                    placeholder="验证码">
-                    <template slot="append">
-                      <img class="login-code" src="./image/login-code.png">
-                    </template>
-                  </el-input>
-                </el-form-item>
                 <el-button
                   size="default"
+                  :loading="loading"
                   @click="submit"
                   type="primary"
                   class="button-login">
@@ -68,12 +70,6 @@
                 </el-button>
               </el-form>
             </el-card>
-            <p
-              class="page-login--options"
-              flex="main:justify cross:center">
-              <span><d2-icon name="question-circle"/> 忘记密码</span>
-              <span>注册用户</span>
-            </p>
             <!-- quick login -->
             <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
               快速选择用户（测试功能）
@@ -81,26 +77,10 @@
           </div>
         </div>
         <div class="page-login--content-footer">
-          <p class="page-login--content-footer-locales">
-            <a
-              v-for="language in $languages"
-              :key="language.value"
-              @click="onChangeLocale(language.value)">
-              {{ language.label }}
-            </a>
-          </p>
           <p class="page-login--content-footer-copyright">
             Copyright
             <d2-icon name="copyright"/>
-            2018 D2 Projects 开源组织出品
-            <a href="https://github.com/FairyEver">
-              @FairyEver
-            </a>
-          </p>
-          <p class="page-login--content-footer-options">
-            <a href="#">帮助</a>
-            <a href="#">隐私</a>
-            <a href="#">条款</a>
+            2021 浙江慧源数字经济发展有限公司
           </p>
         </div>
       </div>
@@ -126,9 +106,7 @@ import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 import localeMixin from '@/locales/mixin.js'
 export default {
-  mixins: [
-    localeMixin
-  ],
+  mixins: [localeMixin],
   data () {
     return {
       timeInterval: null,
@@ -137,26 +115,40 @@ export default {
       dialogVisible: false,
       users: [
         {
-          name: 'Admin',
-          username: 'admin',
-          password: 'admin'
+          name: '招商员',
+          username: '13700000005',
+          password: '123456'
         },
         {
-          name: 'Editor',
-          username: 'editor',
-          password: 'editor'
+          name: '科室负责人',
+          username: '13700000001',
+          password: '123456'
         },
         {
-          name: 'User1',
-          username: 'user1',
-          password: 'user1'
+          name: '法务',
+          username: '13700000002',
+          password: '123456'
+        },
+        {
+          name: '分管领导',
+          username: '13700000003',
+          password: '123456'
+        },
+        {
+          name: '财务',
+          username: '13700000004',
+          password: '123456'
+        },
+        {
+          name: '主要领导',
+          username: '13712345678',
+          password: '123456'
         }
       ],
       // 表单
       formLogin: {
         username: 'admin',
-        password: 'admin',
-        code: 'v9am'
+        password: 'admin'
       },
       // 表单校验
       rules: {
@@ -185,17 +177,15 @@ export default {
     }
   },
   mounted () {
-    this.timeInterval = setInterval(() => {
-      this.refreshTime()
-    }, 1000)
+    // this.timeInterval = setInterval(() => {
+    //   this.refreshTime()
+    // }, 1000)
   },
   beforeDestroy () {
     clearInterval(this.timeInterval)
   },
   methods: {
-    ...mapActions('d2admin/account', [
-      'login'
-    ]),
+    ...mapActions('d2admin/account', ['login']),
     refreshTime () {
       this.time = dayjs().format('HH:mm:ss')
     },
@@ -213,7 +203,7 @@ export default {
      */
     // 提交登录信息
     submit () {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           // 登录
           // 注意 这里的演示没有传验证码
@@ -221,11 +211,10 @@ export default {
           this.login({
             username: this.formLogin.username,
             password: this.formLogin.password
+          }).then(() => {
+            // 重定向对象不存在则返回顶层路径
+            this.$router.replace(this.$route.query.redirect || '/')
           })
-            .then(() => {
-              // 重定向对象不存在则返回顶层路径
-              this.$router.replace(this.$route.query.redirect || '/')
-            })
         } else {
           // 登录表单校验失败
           this.$message.error('表单校验失败，请检查')
@@ -277,19 +266,42 @@ export default {
   }
   // main
   .page-login--logo {
-    width: 240px;
-    margin-bottom: 2em;
-    margin-top: -2em;
+    width: 40px;
+    height: 40px;
+  }
+  .login-title {
+    font-size: 22px;
+    // margin-left: 10px;
+    color: #fff;
+  }
+  .el-input-group__prepend {
+    background: transparent;
+    border: 1px solid #09365b;
+    border-right: none;
+    color: #6BB6FF;
+  }
+  .el-input__inner {
+    background: transparent;
+    border: 1px solid #09365b;
+    color: #fff;
   }
   // 登录表单
   .page-login--form {
-    width: 280px;
+    margin-right: 8%;
+    width: 400px;
     // 卡片
     .el-card {
-      margin-bottom: 15px;
+      padding:35px 35px 69px  35px ;
+      // background: #2049B1;
+      // border: 2px solid #4B7FFF;
+      border: none;
+      border-radius: 5px;
+      background: url(./images/bg-form.png) no-repeat;
+      background-size: 100% 100%;
     }
     // 登录按钮
     .button-login {
+      margin-top: 20px;
       width: 100%;
     }
     // 输入框左边的图表区域缩窄
@@ -366,9 +378,9 @@ export default {
       font-size: 12px;
       line-height: 12px;
       text-align: center;
-      color: $color-text-normal;
+      color: #fff;
       a {
-        color: $color-text-normal;
+        color: #fff;
       }
     }
     .page-login--content-footer-options {
@@ -480,6 +492,20 @@ export default {
         animation-duration: 11s;
       }
     }
+  }
+
+  .bg-image {
+    // background: url(./image/login-bg.png) no-repeat;
+    background: url(./images/bg-login.png) no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .system-title{
+    position: absolute;
+    left: 9%;
+    top: 6%;
+    font-size: 50px;
+    color: #fff;
   }
 }
 </style>

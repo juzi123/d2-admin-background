@@ -6,10 +6,9 @@ import { errorLog, errorCreate } from './tools'
 
 let baseUrl = ''
 if (process.env.NODE_ENV === 'development') {
-  baseUrl = 'http://app.changxinghuiyuan.com/kfqpt/'
+  baseUrl = ''
 } else {
-  // baseUrl = 'http://218.75.53.71:11001/kfqpt/'
-  baseUrl = 'http://app.changxinghuiyuan.com/kfqpt/'
+  baseUrl = ''
 }
 
 /**
@@ -90,7 +89,7 @@ function createRequestFunction (service) {
         Authorization: token,
         'Content-Type': get(config, 'headers.Content-Type', 'application/json')
       },
-      timeout: 30000,
+      timeout: 9000,
       // baseURL: process.env.VUE_APP_API,
       baseURL: baseUrl,
       data: {}

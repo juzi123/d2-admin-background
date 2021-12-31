@@ -17,26 +17,21 @@ function supplementPath (menu) {
 
 export const menuHeader = supplementPath([
   { path: '/index', title: '首页', icon: 'home' },
-  {
-    title: '页面',
-    icon: 'folder-o',
-    children: [
-      { path: '/page1', title: '页面 1' },
-      { path: '/page2', title: '页面 2' },
-      { path: '/page3', title: '页面 3' }
-    ]
-  }
+  { path: '/fundCommited', title: '拨款申请', icon: 'list-alt' },
+  { path: '/fundApprove', title: '拨款审批', icon: 'pencil-square-o' }
 ])
 
 export const menuAside = supplementPath([
   { path: '/index', title: '首页', icon: 'home' },
-  {
-    title: '页面',
-    icon: 'folder-o',
-    children: [
-      { path: '/page1', title: '页面 1' },
-      { path: '/page2', title: '页面 2' },
-      { path: '/page3', title: '页面 3' }
-    ]
-  }
+  { path: '/fundCommited', title: '拨款申请', icon: 'list-alt' },
+  { path: '/fundApprove', title: '拨款审批', icon: 'pencil-square-o' }
+  // {
+  //   title: '页面',
+  //   icon: 'folder-o',
+  //   children: [
+  //     { path: '/page1', title: '页面 1' },
+  //     { path: '/page2', title: '页面 2' },
+  //     { path: '/page3', title: '页面 3' }
+  //   ]
+  // }
 ])

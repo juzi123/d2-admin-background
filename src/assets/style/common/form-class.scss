@@ -1,0 +1,48 @@
+/*
+ * @Author: bujunjie
+ * @Date: 2021-12-30 09:01:04
+ * @LastEditors: bujunjie
+ * @LastEditTime: 2021-12-30 09:45:03
+ * @Description: 设置表单通用样式
+ */
+// 根据表单文字宽度覆盖
+$form-label-width: 180px !default;
+
+.one-line {
+  width: calc(100% - 10px);
+}
+.half-line {
+  width: calc(50% - 10px);
+}
+.form-item-content {
+  width: 100%;
+}
+
+::v-deep .el-form-item__content {
+  width: calc(100% - #{$form-label-width});
+}
+
+// 表单文字需换行
+.warp-line ::v-deep .el-form-item__label {
+  white-space: pre-line;
+  line-height: 22px;
+}
+
+// 表单内间距
+::v-deep .el-dialog__body {
+  padding: 25px 70px 20px;
+}
+
+// 标题
+::v-deep .el-dialog__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+// 禁用状态的字体颜色
+::v-deep .el-textarea.is-disabled .el-textarea__inner {
+  color: #606266;
+}
+::v-deep .el-input.is-disabled .el-input__inner {
+  color: #606266;
+}
