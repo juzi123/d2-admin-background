@@ -22,7 +22,7 @@
         class="lizi"
         style="width: 100%;height: 100%"
       ></vue-particles>
-      <div class="system-title">拨款审核平台</div>
+      <div class="system-title">审核平台</div>
     </div>
     <div class="page-login--layer">
       <div
@@ -80,7 +80,7 @@
           <p class="page-login--content-footer-copyright">
             Copyright
             <d2-icon name="copyright"/>
-            2021 浙江慧源数字经济发展有限公司
+            2022 公司
           </p>
         </div>
       </div>
@@ -109,46 +109,42 @@ export default {
   mixins: [localeMixin],
   data () {
     return {
+      loading: false,
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
       // 快速选择用户
       dialogVisible: false,
       users: [
         {
-          name: '招商员',
-          username: '13700000005',
+          name: '管理员',
+          username: 'admin',
           password: '123456'
         },
         {
-          name: '科室负责人',
-          username: '13700000001',
+          name: '张三',
+          username: '张三',
           password: '123456'
         },
         {
-          name: '法务',
-          username: '13700000002',
+          name: '李四',
+          username: '李四',
           password: '123456'
         },
         {
-          name: '分管领导',
-          username: '13700000003',
+          name: '王五',
+          username: '王五',
           password: '123456'
         },
         {
-          name: '财务',
-          username: '13700000004',
-          password: '123456'
-        },
-        {
-          name: '主要领导',
-          username: '13712345678',
+          name: '测试1',
+          username: 'test1',
           password: '123456'
         }
       ],
       // 表单
       formLogin: {
         username: 'admin',
-        password: 'admin'
+        password: '123456'
       },
       // 表单校验
       rules: {
@@ -203,6 +199,7 @@ export default {
      */
     // 提交登录信息
     submit () {
+      this.loading = true
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           // 登录
@@ -214,8 +211,11 @@ export default {
           }).then(() => {
             // 重定向对象不存在则返回顶层路径
             this.$router.replace(this.$route.query.redirect || '/')
+          }).finally(() => {
+            this.loading = false
           })
         } else {
+          this.loading = false
           // 登录表单校验失败
           this.$message.error('表单校验失败，请检查')
         }

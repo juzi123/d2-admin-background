@@ -2,32 +2,20 @@
  * @Author: bujunjie
  * @Date: 2021-12-30 08:41:39
  * @LastEditors: bujunjie
- * @LastEditTime: 2022-01-11 16:38:48
+ * @LastEditTime: 2022-01-11 16:38:32
  * @Description: 拨款审批表单
 -->
 <template>
   <el-dialog :title="title" :visible.sync="dialogVisible" width="1200px" top="40px" @close="close">
     <h3 class="sub-title">申请详情:</h3>
     <el-form ref="elForm" :model="formData" :rules="rules" label-width="180px" :inline="true">
-      <el-form-item label="项目类型:" class="one-line">
-        <el-radio-group v-model="formData.isCommercial" :disabled="true">
-          <el-radio :label="true" border>经营性项目</el-radio>
-          <el-radio :label="false" border>非经营性项目</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="项目编号:" class="one-line">
-        <el-input v-model="formData.projectNo" placeholder="请输入内容" :disabled="true"></el-input>
-      </el-form-item>
       <el-form-item label="所属公司:" class="one-line">
         <el-radio-group v-model="formData.company" :disabled="true">
           <el-radio label="公司" border></el-radio>
           <el-radio label="科技公司" border></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="项目名称:" class="one-line">
-        <el-input v-model="formData.projectName" placeholder="请输入内容" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="业主单位:" class="one-line">
+      <el-form-item label="维护单位:" class="one-line">
         <el-input v-model="formData.ownerUnit" placeholder="请输入内容" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="联系人:" class="half-line">
@@ -36,22 +24,8 @@
       <el-form-item label="联系电话:" class="half-line">
         <el-input v-model="formData.ownerPhone" placeholder="请输入内容" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="合同金额(万元):" class="half-line">
-        <el-input v-model="formData.contractAmount" placeholder="请输入内容" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="本次支付比例(%):" class="half-line">
-        <el-input v-model="formData.paymentPercent" placeholder="请输入内容" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="本次支付金额(万元):" class="half-line">
+      <el-form-item label="本次申请维护金额(万元):" class="half-line">
         <el-input v-model="formData.paymentAmount" placeholder="请输入内容" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="付款备注:" class="half-line">
-        <el-input v-model="formData.paymentAmountRemark" placeholder="请输入内容" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="本次支付类型:" class="one-line">
-        <el-radio-group v-model="formData.paymentType" :disabled="true" class="radio-margin">
-          <el-radio v-for="item in $dictData.paymentType" :key="item.value" :label="item.value" border>{{item.text}}</el-radio>
-        </el-radio-group>
       </el-form-item>
       <el-form-item label="备注:" class="one-line">
         <el-input type="textarea" v-model="formData.remark" placeholder="请输入内容" :disabled="true"></el-input>
@@ -59,7 +33,7 @@
       <el-form-item label="合同:" class="one-line">
         <UploadFile v-model="formData.contract" :disabled="true"></UploadFile>
       </el-form-item>
-      <el-form-item label="支付审批单:" class="one-line">
+      <el-form-item label="计算清单:(需签字):" class="one-line">
         <UploadFile v-model="formData.paymentApprovalForm" :disabled="true"></UploadFile>
       </el-form-item>
       <el-form-item label="发票:" class="one-line">
@@ -105,7 +79,7 @@ import { mapState } from 'vuex'
 import { postAction } from '@/api/manage'
 import UploadFile from '@/components/common/UploadFile.vue'
 export default {
-  name: 'fundApproveForm',
+  name: 'maintenanceApproveModal',
   components: {
     UploadFile
   },

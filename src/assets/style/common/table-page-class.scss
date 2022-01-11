@@ -2,7 +2,7 @@
  * @Author: bujunjie
  * @Date: 2021-12-31 11:26:29
  * @LastEditors: bujunjie
- * @LastEditTime: 2021-12-31 13:31:42
+ * @LastEditTime: 2022-01-06 14:43:46
  * @Description: 列表页面通用样式
  */
 
@@ -34,6 +34,9 @@
     margin-left: 8px;
     cursor: pointer;
   }
+}
+.search-content {
+   width: 100%;
 }
 .operate-wrap {
   margin-top: 12px;

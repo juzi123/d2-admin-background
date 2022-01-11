@@ -4,6 +4,19 @@ import dict from '@/dict'
 import dayjs from 'dayjs'
 export default {
   install (Vue) {
+    Vue.filter('fileFilter', function (fileList) {
+      if (!fileList) return ''
+      const fl = JSON.parse(fileList)
+      if (fl instanceof Array) {
+        const nameList = JSON.parse(fileList).map(item => {
+          return item.name
+        })
+        return nameList.join(', ')
+      } else {
+        return fl
+      }
+    })
+
     /**
      * @description: 数据字典过滤器
      * @param {*} dictFilter 数据字典过滤器

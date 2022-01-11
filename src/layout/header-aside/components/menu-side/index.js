@@ -2,6 +2,7 @@ import { mapState } from 'vuex'
 import menuMixin from '../mixin/menu'
 import { createMenu } from '../libs/util.menu'
 import BScroll from 'better-scroll'
+import { filterByUserRole } from '@/permission/index'
 
 export default {
   name: 'd2-layout-header-aside-menu-side',
@@ -17,10 +18,10 @@ export default {
         defaultActive={ this.$route.fullPath }
         ref="menu"
         onSelect={ this.handleMenuSelect }>
-        { this.aside.map(menu => createMenu.call(this, h, menu)) }
+        { this.permissionMenu.map(menu => createMenu.call(this, h, menu)) }
       </el-menu>
       {
-        this.aside.length === 0 && !this.asideCollapse
+        this.permissionMenu.length === 0 && !this.asideCollapse
           ? <div class="d2-layout-header-aside-menu-empty" flex="dir:top main:center cross:center">
             <d2-icon name="inbox"></d2-icon>
             <span>没有侧栏菜单</span>
@@ -32,7 +33,8 @@ export default {
   data () {
     return {
       asideHeight: 300,
-      BS: null
+      BS: null,
+      permissionMenu: []
     }
   },
   computed: {
@@ -53,11 +55,15 @@ export default {
   },
   mounted () {
     this.scrollInit()
+    this.getPermissionMenu()
   },
   beforeDestroy () {
     this.scrollDestroy()
   },
   methods: {
+    getPermissionMenu () {
+      this.permissionMenu = filterByUserRole(this.aside)
+    },
     scrollInit () {
       this.BS = new BScroll(this.$el, {
         mouseWheel: true,

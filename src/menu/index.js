@@ -16,15 +16,16 @@ function supplementPath (menu) {
 }
 
 export const menuHeader = supplementPath([
-  { path: '/index', title: '首页', icon: 'home' },
-  { path: '/fundCommited', title: '拨款申请', icon: 'list-alt' },
-  { path: '/fundApprove', title: '拨款审批', icon: 'pencil-square-o' }
+  // { path: '/index', title: '首页', icon: 'home' },
+  // { path: '/fundCommited', title: '拨款申请', icon: 'list-alt' },
+  // { path: '/fundApprove', title: '拨款审批', icon: 'pencil-square-o' }
 ])
 
 export const menuAside = supplementPath([
-  { path: '/index', title: '首页', icon: 'home' },
-  { path: '/fundCommited', title: '拨款申请', icon: 'list-alt' },
-  { path: '/fundApprove', title: '拨款审批', icon: 'pencil-square-o' }
+  { id: 'index', path: '/index', title: '首页', icon: 'home' },
+  { id: 'fundCommited', path: '/fundCommited', title: '拨款申请', icon: 'list-alt' },
+  { id: 'fundApprove', path: '/fundApprove', title: '拨款审批', icon: 'pencil-square-o' },
+  { id: 'userList', path: '/userList', title: '用户管理', icon: 'user-o' }
   // {
   //   title: '页面',
   //   icon: 'folder-o',

@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css'
 import store from '@/store/index'
 import util from '@/libs/util.js'
 
+import { getPermissionList } from '@/permission/index'
 // 路由数据
 import routes from './routes'
 
@@ -59,6 +60,13 @@ router.beforeEach(async (to, from, next) => {
       })
       // https://github.com/d2-projects/d2-admin/issues/138
       NProgress.done()
+    }
+    // 没有权限跳转到404
+    const permissionList = getPermissionList()
+    if (to.meta.id && permissionList.findIndex(a => a === to.meta.id) === -1) {
+      next({
+        name: '404'
+      })
     }
   } else {
     // 不需要身份校验 直接通过

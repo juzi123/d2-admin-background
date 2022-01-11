@@ -2,7 +2,7 @@
  * @Author: bujunjie
  * @Date: 2021-12-30 09:01:04
  * @LastEditors: bujunjie
- * @LastEditTime: 2021-12-30 09:45:03
+ * @LastEditTime: 2022-01-06 13:56:50
  * @Description: 设置表单通用样式
  */
 // 根据表单文字宽度覆盖
@@ -38,11 +38,21 @@ $form-label-width: 180px !default;
   font-size: 20px;
   font-weight: bold;
 }
+$disabled-font-color: #606266;
 
 // 禁用状态的字体颜色
 ::v-deep .el-textarea.is-disabled .el-textarea__inner {
-  color: #606266;
+  color: $disabled-font-color;
 }
 ::v-deep .el-input.is-disabled .el-input__inner {
-  color: #606266;
+  color: $disabled-font-color;
+}
+::v-deep .el-radio__input.is-disabled+span.el-radio__label {
+  color: $disabled-font-color;
+}
+::v-deep .el-radio__input.is-disabled.is-checked .el-radio__inner::after {
+  background-color: #8e8e8e;
+}
+.el-radio.is-bordered + .el-radio.is-bordered {
+  margin-left: 0;
 }

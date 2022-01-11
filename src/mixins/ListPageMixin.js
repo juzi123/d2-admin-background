@@ -2,18 +2,20 @@
  * @Author: bujunjie
  * @Date: 2021-12-31 09:53:40
  * @LastEditors: bujunjie
- * @LastEditTime: 2021-12-31 14:11:42
+ * @LastEditTime: 2022-01-10 16:59:52
  * @Description: 列表页混入
  */
 import { filterObj } from '@/utils/util'
 import util from '@/libs/util'
-import { deleteAction, getAction } from '@/api/manage'
+import { deleteAction, httpAction } from '@/api/manage'
 
 export const ListPageMixin = {
   data () {
     return {
-      /* 查询条件 */
+      /* 查询参数 */
       queryParam: {},
+      /* 查询体参数 */
+      requestBody: {},
       /* 列表数据 */
       tableData: [],
       /* 分页参数 */
@@ -21,8 +23,10 @@ export const ListPageMixin = {
         total: 0,
         pageIndex: 1,
         pageSize: 10,
-        pageSizeOptions: ['10', '20', '30']
+        pageSizeOptions: [10, 20, 30]
       },
+      // 列表请求方式
+      queryMethod: 'post',
       /* table加载状态 */
       loading: false,
       /* table选中keys */
@@ -36,6 +40,7 @@ export const ListPageMixin = {
   created () {
     if (!this.disableMixinCreated) {
       console.log(' -- mixin created -- ')
+      this.init()
       this.loadData()
       // 初始化字典配置 在自己页面定义
       this.initDictConfig()
@@ -48,6 +53,10 @@ export const ListPageMixin = {
     }
   },
   methods: {
+    // 初始化参数
+    init () {
+      this.requestBody = {}
+    },
     loadData (arg) {
       if (!this.url.list) {
         this.$message.error('请设置url.list属性!')
@@ -59,11 +68,11 @@ export const ListPageMixin = {
       }
       const params = this.getQueryParams()// 查询条件
       this.loading = true
-      getAction(this.url.list, params).then((res) => {
-        if (res.success) {
-          this.tableSource = res.result.records || res.result
-          if (res.result.total) {
-            this.iPagination.total = res.result.total
+      httpAction(this.url.list, this.queryMethod, params, this.requestBody).then((res) => {
+        if (res.statusCode === 200) {
+          this.tableData = res.result.pageList || res.result
+          if (res.result.totalCount) {
+            this.iPagination.total = res.result.totalCount
           } else {
             this.iPagination.total = 0
           }
@@ -103,6 +112,7 @@ export const ListPageMixin = {
       this.$refs.superQueryModal.show()
     },
     searchReset () {
+      this.init()
       this.queryParam = {}
       this.loadData(1)
     },
@@ -125,7 +135,7 @@ export const ListPageMixin = {
           onOk: function () {
             that.loading = true
             deleteAction(that.url.deleteBatch, { ids: ids }).then((res) => {
-              if (res.success) {
+              if (res.statusCode === 200) {
                 // 重新计算分页问题
                 that.reCalculatePage(that.selectedRowKeys.length)
                 that.$message.success(res.message)
@@ -148,7 +158,7 @@ export const ListPageMixin = {
       }
       var that = this
       deleteAction(that.url.delete, { id: id }).then((res) => {
-        if (res.success) {
+        if (res.statusCode === 200) {
           // 重新计算分页问题
           that.reCalculatePage(1)
           that.$message.success(res.message)
@@ -169,15 +179,13 @@ export const ListPageMixin = {
       }
       console.log('currentIndex', currentIndex)
     },
-    handleEdit: function (record) {
-      this.$refs.modalForm.edit(record)
-      this.$refs.modalForm.title = '编辑'
-      this.$refs.modalForm.disableDialog = false
+    handleEdit: function (record, modalName = 'modalForm') {
+      this.$refs[modalName].edit(record)
+      this.$refs[modalName].state = 1
     },
-    handleAdd: function () {
-      this.$refs.modalForm.add()
-      this.$refs.modalForm.title = '新增'
-      this.$refs.modalForm.disableDialog = false
+    handleAdd: function (modalName = 'modalForm') {
+      this.$refs[modalName].add()
+      this.$refs[modalName].state = 0
     },
     // handleTableChange (pagination, filters, sorter) {
     //   // 分页、排序、筛选变化时触发
@@ -199,10 +207,9 @@ export const ListPageMixin = {
       // 清空列表选中
       this.onClearSelected()
     },
-    handleDetail: function (record) {
-      this.$refs.modalForm.edit(record)
-      this.$refs.modalForm.title = '详情'
-      this.$refs.modalForm.disableDialog = true
+    handleDetail: function (record, modalName = 'modalForm') {
+      this.$refs[modalName].edit(record)
+      this.$refs[modalName].state = 2
     },
     // 每页数据条数修改
     pageSizeChange (pagesize) {

@@ -17,6 +17,7 @@ const frameIn = [
         path: 'index',
         name: 'index',
         meta: {
+          id: 'index',
           auth: true
         },
         component: _import('system/index')
@@ -26,6 +27,7 @@ const frameIn = [
         path: 'fundCommited',
         name: 'fundCommited',
         meta: {
+          id: 'fundCommited',
           title: '拨款申请',
           auth: true
         },
@@ -36,10 +38,22 @@ const frameIn = [
         path: 'fundApprove',
         name: 'fundApprove',
         meta: {
+          id: 'fundApprove',
           title: '拨款审批',
           auth: true
         },
         component: _import('fundApprove/fundApproveList')
+      },
+      // 用户管理
+      {
+        path: 'userList',
+        name: 'userList',
+        meta: {
+          id: 'userList',
+          title: '用户管理',
+          auth: true
+        },
+        component: _import('accountManage/userList')
       },
       // 系统 前端日志
       {

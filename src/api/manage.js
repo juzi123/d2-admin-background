@@ -19,12 +19,13 @@ export function postAction (url, parameter) {
   })
 }
 
-// post method= {post | put}
-export function httpAction (url, parameter, method) {
+// post method= {post | get}
+export function httpAction (url, method, parameter, body) {
   return request({
     url: url,
     method: method,
-    data: parameter
+    params: parameter,
+    data: body
   })
 }
 
